@@ -9,20 +9,17 @@ SPEC through one or more Claude Code sessions (loops), harness-first.
 |---|---|---|---|
 | 0 — Foundation | — | Constitution, CLAUDE.md, roadmap, atom-schema contract, ADR log | ✅ |
 | 1 — Data foundation | SPEC-001 ✅, SPEC-002 ✅ | Atom model + idempotent vault writer; deterministic Spec-Driven repo adapter | ✅ |
-| 2 — Graph index | SPEC-003 ▶, SPEC-004 | Pure vault→graph mapping + embedder port (003); live Neo4j sync + vector index + real bge-m3 (004) | ▶ |
+| 2 — Graph index | SPEC-003 ✅, SPEC-004 ▶ | Pure vault→graph mapping + embedder port (done); live Neo4j sync + vector index + real bge-m3 | ▶ |
 | 3 — Cross-project | SPEC-005 | Concept extraction + normalization + Pass-2 linking (RELATES_TO) | ◻ |
 | 4 — Interface | SPEC-006 | MCP server: search_memory / get_related / project_context | ◻ |
 | 5 — Conversations | SPEC-007 | Adapter for the dedicated Fran↔Manuel ideas chat (LLM extraction) | ◻ |
 | 6 — Visual brain | SPEC-008 | Per-project MOC generation (Obsidian materialization) | ◻ |
 | 7 — Orchestration | SPEC-009 | Backfill batch + continuous incremental flow | ◻ |
 
-**Current phase: 2.** Active SPEC: **SPEC-003**. Active session: **SESSION-003**.
+**Current phase: 2.** Active SPEC: **SPEC-004**. Active session: **SESSION-004**.
 
-Phase 2 is split deliberately: SPEC-003 is infra-free (pure mapping + a fake
-embedder, fully unit-testable, no Neo4j/Ollama), SPEC-004 is the live I/O
-(real Neo4j via Docker, native vector index, real bge-m3). This keeps each loop
-bounded and lets infrastructure be stood up in parallel rather than blocking the
-logic.
+Phase 2 split: SPEC-003 (infra-free mapping + fake embedder) is done; SPEC-004 is
+the live I/O — real Neo4j via Docker, native vector index, real bge-m3.
 
 ## Session log
 
@@ -30,6 +27,7 @@ logic.
 |---|---|---|---|
 | SESSION-001 | SPEC-001 | ✅ T1–T7 GREEN, 22 cases | `15d8c30` |
 | SESSION-002 | SPEC-002 | ✅ T1–T6 GREEN, 32 total | `4a11838` |
+| SESSION-003 | SPEC-003 | ✅ T1–T7 GREEN, 44 total | `018bf2f` |
 
 ## Open items
 
