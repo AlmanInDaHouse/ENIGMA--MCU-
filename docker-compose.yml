@@ -1,0 +1,30 @@
+# Local infrastructure for ENIGMA-MCU integration tests (SPEC-004).
+#
+# Host ports are intentionally NON-default (7475/7688 instead of 7474/7687):
+# another project's Neo4j already binds the standard ports on this machine, and
+# ENIGMA must never read or write that database. The integration tests default
+# NEO4J_URI to bolt://localhost:7688 so they only ever talk to THIS service.
+#
+#   docker compose up -d
+#   NEO4J_URI=bolt://localhost:7688 NEO4J_PASSWORD=enigmatest pytest -m integration
+services:
+  neo4j:
+    image: neo4j:5
+    container_name: enigma-neo4j
+    ports:
+      - "7475:7474"   # HTTP / browser  (host 7475 -> container 7474)
+      - "7688:7687"   # Bolt            (host 7688 -> container 7687)
+    environment:
+      NEO4J_AUTH: "neo4j/${NEO4J_PASSWORD:-enigmatest}"
+      # bge-m3 vectors are 1024-dim; default heap/pagecache are fine for tests.
+      NEO4J_server_memory_pagecache_size: "256M"
+    volumes:
+      - enigma_neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  enigma_neo4j_data:

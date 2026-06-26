@@ -5,6 +5,8 @@ description = "ENIGMA-MCU — unified atomic contextual-memory engine. Atom mode
 requires-python = ">=3.12"
 dependencies = [
     "pyyaml>=6.0",
+    "neo4j>=5.0",
+    "requests>=2.0",
 ]
 
 [project.optional-dependencies]
@@ -17,7 +19,10 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["enigma_mcu"]
+packages = ["enigma_mcu", "enigma_mcu.adapters", "enigma_mcu.graph", "enigma_mcu.embeddings"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "integration: requires live infrastructure (Neo4j and/or Ollama bge-m3); skipped when unavailable",
+]
