@@ -178,3 +178,17 @@ def test_t5_write_report_directly(tmp_path):
     paths = write_report(result, tmp_path / "out")
     assert paths.markdown.exists() and paths.json.exists()
     assert "MCP" in paths.markdown.read_text(encoding="utf-8")
+
+
+# --- FR-2: missing OPENROUTER_API_KEY raises a clear configuration error -----
+# (Unit-level: constructing the extractor without a key must fail fast, no API.)
+
+def test_openrouter_missing_key_raises_configuration_error(monkeypatch):
+    from enigma_mcu.extraction.openrouter import (
+        ConfigurationError,
+        OpenRouterConceptExtractor,
+    )
+
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+    with pytest.raises(ConfigurationError):
+        OpenRouterConceptExtractor()
