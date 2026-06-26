@@ -34,7 +34,10 @@ After step 5 you have full context. Do not rely on memory of any previous chat.
 - **Stay in scope.** Do only what the active SPEC and the session brief declare.
   Respect the brief's "do-not-touch" list. Out-of-scope ideas go into the session
   report as proposals, not into the code.
-- **Never merge RED.** No commit to `main` leaves the harness failing.
+- **RED commits are local checkpoints; push only on GREEN.** Committing the RED
+  harness locally is fine and encouraged. But `origin/main` never carries a
+  failing harness: push only when `HEAD` is GREEN. (Resolves the apparent tension
+  between "commit the RED harness" in a brief and "main is never RED".)
 - **Artifacts in English.** Code, comments, docs, commit messages — all English.
   Use conventional commit messages.
 - **Provenance & idempotency.** When writing ingestion code, honor Constitution

@@ -96,6 +96,15 @@ Per-adapter ID strategy:
 trailing whitespace, collapse trailing spaces per line, LF newlines. Logically
 identical bodies hash identically; real changes differ.
 
+**Body storage.** The body is stored in **normalized form** — normalization is
+applied at `Atom` construction, not only when hashing. This gives a single
+canonical body, so the persisted file, `content_hash`, byte-stable writes, and
+round-trip reads are all consistent. Per-line indentation is preserved; only
+outer whitespace and per-line trailing whitespace are normalized.
+
+**Serialization.** Frontmatter dates are serialized as quoted strings, for
+deterministic, round-trip-stable output.
+
 ## 5. Concept & Project stubs
 
 ```yaml
