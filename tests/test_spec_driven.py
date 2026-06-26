@@ -7,7 +7,7 @@ deterministically into `decision` atoms and feeds them to the SPEC-001
 
 import pytest
 
-from conftest import FIXTURES, StubClock
+from conftest import FIXTURES, MutableClock
 from enigma_mcu.adapters.spec_driven import (
     ARTIFACT_ADR_LOG,
     ARTIFACT_CONSTITUTION,
@@ -125,7 +125,7 @@ def test_t3_unknown_status_is_skipped_with_warning():
 # --- T4: end-to-end idempotency through VaultWriter -------------------------
 
 def test_t4_end_to_end_idempotent(tmp_path):
-    clock = StubClock(["2026-06-26", "2026-06-27"])
+    clock = MutableClock("2026-06-26")
     writer = VaultWriter(tmp_path, clock=clock)
 
     atoms = _adapter().parse_file(ADR_LOG, ARTIFACT_ADR_LOG, source_ref="docs/ADR-LOG.md")
@@ -141,7 +141,8 @@ def test_t4_end_to_end_idempotent(tmp_path):
     files = sorted((tmp_path / "enigma-mcu").glob("*.md"))
     assert len(files) == len(paths_first)  # no duplicates
 
-    # Edit the Decision body of ADR-0001 -> in-place update.
+    # A later run on an edited Decision body -> in-place update on a new "day".
+    clock.now = "2026-06-27"
     edited_text = ADR_LOG.read_text(encoding="utf-8").replace(
         "The markdown vault is the single source of truth; Neo4j is a derived, "
         "fully rebuildable graph and vector index.",

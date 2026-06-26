@@ -55,6 +55,7 @@ class StubClock:
     """Returns the next canned date string per call; raises if drained.
 
     Lets a test assert exactly when the writer stamps `created`/`updated`.
+    Use when each write should see a distinct date (one value consumed per call).
     """
 
     def __init__(self, values):
@@ -62,3 +63,17 @@ class StubClock:
 
     def __call__(self):
         return self._values.pop(0)
+
+
+class MutableClock:
+    """Returns a fixed "today" until reassigned — models a real wall clock.
+
+    Multiple writes in the same run all see the same date; advance `now` to
+    simulate a later run. Use when a run writes several files on the "same day".
+    """
+
+    def __init__(self, now):
+        self.now = now
+
+    def __call__(self):
+        return self.now
