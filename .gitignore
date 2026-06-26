@@ -7,3 +7,6 @@ __pycache__/
 venv/
 build/
 dist/
+
+# SPEC-005 dry-run concept reports (curation artifacts, not source of truth)
+reports/

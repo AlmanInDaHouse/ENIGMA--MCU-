@@ -43,6 +43,11 @@ def neo4j_available() -> bool:
         return False
 
 
+def openrouter_available() -> bool:
+    """True only if an OpenRouter API key is configured (SPEC-005 integration gate)."""
+    return bool(os.environ.get("OPENROUTER_API_KEY"))
+
+
 def ollama_model_available(model: str = EMBED_MODEL) -> bool:
     """True only if Ollama is reachable AND `model` is pulled. Never raises."""
     try:

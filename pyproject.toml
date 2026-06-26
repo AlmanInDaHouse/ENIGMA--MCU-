@@ -19,7 +19,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["enigma_mcu", "enigma_mcu.adapters", "enigma_mcu.graph", "enigma_mcu.embeddings"]
+packages = ["enigma_mcu", "enigma_mcu.adapters", "enigma_mcu.graph", "enigma_mcu.embeddings", "enigma_mcu.extraction"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
